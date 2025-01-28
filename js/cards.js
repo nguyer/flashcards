@@ -1,11 +1,10 @@
-const showBack = () => {
-  const back = document.getElementById("back");
-  back.style.display = "block";
-};
+let frontContent;
+let backContent;
+let front;
+let back;
+let settingsPanel;
 
 const flip = (showFront) => {
-  const front = document.getElementById("front");
-  const back = document.getElementById("back");
   if (showFront || front.style.display == "none") {
     front.style.display = "flex";
     back.style.display = "none";
@@ -48,22 +47,17 @@ const changeCard = (offset) => {
   if (index < 0) {
     index = cards.length + index;
   }
-  setTimeout(() => {
-    window.localStorage.setItem("index", index.toString());
-  }, 0);
+  window.localStorage.setItem("index", index.toString());
 
   flip(true);
 
-  const front = document.getElementById("front-content");
-  const back = document.getElementById("back-content");
-  front.innerText = cards[index].front.text;
-  front.style.fontSize = cards[index].front.fontSize || "20vw";
-  back.innerText = cards[index].back.text;
-  back.style.fontSize = cards[index].back.fontSize || "20vw";
+  frontContent.innerText = cards[index].front.text;
+  frontContent.style.fontSize = cards[index].front.fontSize || "20vw";
+  backContent.innerText = cards[index].back.text;
+  backContent.style.fontSize = cards[index].back.fontSize || "20vw";
 };
 
 const toggleSettings = () => {
-  const settingsPanel = document.getElementById("settingsPanel");
   if (settingsPanel.style.display == "none") {
     settingsPanel.style.display = "flex";
   } else {
@@ -92,6 +86,11 @@ const loadCards = (e) => {
 };
 
 const init = () => {
+  frontContent = document.getElementById("front-content");
+  backContent = document.getElementById("back-content");
+  front = document.getElementById("front");
+  back = document.getElementById("back");
+  settingsPanel = document.getElementById("settingsPanel");
   const savedIndex = window.localStorage.getItem("index");
   if (savedIndex) {
     index = parseInt(savedIndex);
