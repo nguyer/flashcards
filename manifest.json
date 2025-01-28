@@ -1,7 +1,7 @@
 {
     "name": "Flash Cards",
     "short_name": "Flash Cards",
-    "description": "Helpful study tool",
+    "description": "A really simple studying tool",
     "icons": [
       {
         "src": "icons/icon-32.png",
@@ -16,7 +16,7 @@
     ],
     "start_url": "index.html",
     "display": "fullscreen",
-    "theme_color": "#B12A34",
-    "background_color": "#B12A34"
+    "theme_color": "#fff",
+    "background_color": "#fff"
   }
   
