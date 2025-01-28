@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flash Cards</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="js/cards.js"></script>
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body onload="init()">
+    <div class="card">
+      <div class="topTapTarget" onclick="toggleSettings()"></div>
+      <div class="sideTapTarget" id="right" onclick="changeCard(1)"></div>
+      <div class="sideTapTarget" id="left" onclick="changeCard(-1)"></div>
+      <div id="front" class="card-side" onclick="flip()">
+        <span class="content" id="front-content"></span>
+      </div>
+      <div id="back" class="card-side" style="display: none" onclick="flip()">
+        <span class="content" id="back-content"></span>
+      </div>
+    </div>
+    <div id="settingsPanel" style="display: none">
+      <div class="closeButton" onclick="toggleSettings()">✖</div>
+      <h1>Settings</h1>
+      <div class="settings">
+        <div>
+          <input type="checkbox" id="reverseCheckbox" value="false" />Reverse
+          direction
+        </div>
+        <button>Shuffle cards</button>
+        <button>Restore original order</button>
+
+        <div>Load cards</div>
+        <input type="file" id="selectFiles" onchange="loadCards()" />
+      </div>
+    </div>
+  </body>
+</html>

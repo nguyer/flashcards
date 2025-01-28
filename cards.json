@@ -1,0 +1,44 @@
+[
+  {
+    "front": {
+      "text": "hola"
+    },
+    "back": {
+      "text": "hello"
+    }
+  },
+  {
+    "front": {
+      "text": "mamá"
+    },
+    "back": {
+      "text": "mom"
+    }
+  },
+  {
+    "front": {
+      "text": "papá"
+    },
+    "back": {
+      "text": "dad"
+    }
+  },
+  {
+    "front": {
+      "text": "mañsana"
+    },
+    "back": {
+      "text": "apple"
+    }
+  },
+  {
+    "front": {
+      "text": "Acts 20:24",
+      "fontSize": "10vw"
+    },
+    "back": {
+      "text": "But I do not account my life of any value nor as precious to myself, if only I may finish my course and the ministry that I received from the Lord Jesus, to testify to the gospel of the grace of God.\n\nActs 20:24",
+      "fontSize": "5vw"
+    }
+  }
+]
