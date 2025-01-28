@@ -48,7 +48,10 @@ const changeCard = (offset) => {
   if (index < 0) {
     index = cards.length + index;
   }
-  window.localStorage.setItem("index", index.toString());
+  setTimeout(() => {
+    window.localStorage.setItem("index", index.toString());
+  }, 0);
+
   flip(true);
 
   const front = document.getElementById("front-content");
