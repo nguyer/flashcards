@@ -86,10 +86,10 @@ body, html {
     max-width: 200px;
 }
 
-.topTapTarget:hover, .sideTapTarget:hover {
+/* .topTapTarget:hover, .sideTapTarget:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, 0.025);
-}
+} */
 
 #right {
     right: 0;
