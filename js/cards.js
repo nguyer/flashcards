@@ -52,9 +52,9 @@ const changeCard = (offset) => {
   flip(true);
 
   frontContent.textContent = cards[index].front.text;
-  frontContent.style.fontSize = cards[index].front.fontSize || "20vw";
+  frontContent.style.fontSize = cards[index].front.fontSize || "10vw";
   backContent.textContent = cards[index].back.text;
-  backContent.style.fontSize = cards[index].back.fontSize || "20vw";
+  backContent.style.fontSize = cards[index].back.fontSize || "10vw";
 };
 
 const toggleSettings = () => {
@@ -77,6 +77,34 @@ const loadCards = (e) => {
   fr.onload = function (e) {
     cards = JSON.parse(e.target.result);
     window.localStorage.setItem("cards", e.target.result);
+    index = 0;
+    changeCard(0);
+    toggleSettings();
+  };
+
+  fr.readAsText(files.item(0));
+};
+
+const loadCSV = (e) => {
+  var files = document.getElementById("selectCSV").files;
+  console.log(files);
+  if (files.length <= 0) {
+    return;
+  }
+
+  var fr = new FileReader();
+
+  fr.onload = function (e) {
+    const lines = e.target.result.split("\n");
+    cards = new Array(lines.length);
+    for (let i = 0; i < lines.length; i++) {
+      const sides = lines[i].split(",");
+      cards[i] = {
+        front: { text: sides[0] },
+        back: { text: sides[1] },
+      };
+    }
+    window.localStorage.setItem("cards", JSON.stringify(cards));
     index = 0;
     changeCard(0);
     toggleSettings();
