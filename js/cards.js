@@ -51,9 +51,9 @@ const changeCard = (offset) => {
 
   flip(true);
 
-  frontContent.innerText = cards[index].front.text;
+  frontContent.textContent = cards[index].front.text;
   frontContent.style.fontSize = cards[index].front.fontSize || "20vw";
-  backContent.innerText = cards[index].back.text;
+  backContent.textContent = cards[index].back.text;
   backContent.style.fontSize = cards[index].back.fontSize || "20vw";
 };
 
