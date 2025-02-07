@@ -5,12 +5,22 @@ let back;
 let settingsPanel;
 
 const flip = (showFront) => {
-  if (showFront || front.style.display == "none") {
+  if (showFront && !deckFlipped) {
+    // flip to the front
     front.style.display = "flex";
     back.style.display = "none";
-  } else {
+  } else if (showFront) {
+    // flip to the back
     front.style.display = "none";
     back.style.display = "flex";
+  } else if (front.style.display == "flex") {
+    // flip to the back
+    front.style.display = "none";
+    back.style.display = "flex";
+  } else {
+    // flip to the front
+    front.style.display = "flex";
+    back.style.display = "none";
   }
 };
 
@@ -41,7 +51,10 @@ let cards = [
   },
 ];
 
+let indexes = Array.from(Array(cards.length).keys());
 let index = 0;
+let deckFlipped = false;
+
 const changeCard = (offset) => {
   index = (index + offset) % cards.length;
   if (index < 0) {
@@ -51,10 +64,10 @@ const changeCard = (offset) => {
 
   flip(true);
 
-  frontContent.textContent = cards[index].front.text;
-  frontContent.style.fontSize = cards[index].front.fontSize || "10vw";
-  backContent.textContent = cards[index].back.text;
-  backContent.style.fontSize = cards[index].back.fontSize || "10vw";
+  frontContent.textContent = cards[indexes[index]].front.text;
+  frontContent.style.fontSize = cards[indexes[index]].front.fontSize || "10vw";
+  backContent.textContent = cards[indexes[index]].back.text;
+  backContent.style.fontSize = cards[indexes[index]].back.fontSize || "10vw";
 };
 
 const toggleSettings = () => {
@@ -76,7 +89,9 @@ const loadCards = (e) => {
 
   fr.onload = function (e) {
     cards = JSON.parse(e.target.result);
+    indexes = Array.from(Array(cards.length).keys());
     window.localStorage.setItem("cards", e.target.result);
+    window.localStorage.setItem("indexes", indexes);
     index = 0;
     changeCard(0);
     toggleSettings();
@@ -97,6 +112,7 @@ const loadCSV = (e) => {
   fr.onload = function (e) {
     const lines = e.target.result.split("\n");
     cards = new Array(lines.length);
+    indexes = Array.from(Array(cards.length).keys());
     for (let i = 0; i < lines.length; i++) {
       const sides = lines[i].split(",");
       cards[i] = {
@@ -105,6 +121,7 @@ const loadCSV = (e) => {
       };
     }
     window.localStorage.setItem("cards", JSON.stringify(cards));
+    window.localStorage.setItem("indexes", JSON.stringify(indexes));
     index = 0;
     changeCard(0);
     toggleSettings();
@@ -119,6 +136,10 @@ const init = () => {
   front = document.getElementById("front");
   back = document.getElementById("back");
   settingsPanel = document.getElementById("settingsPanel");
+  const savedIndexes = window.localStorage.getItem("indexes");
+  if (savedIndexes) {
+    indexes = JSON.parse(savedIndexes);
+  }
   const savedIndex = window.localStorage.getItem("index");
   if (savedIndex) {
     index = parseInt(savedIndex);
@@ -127,5 +148,39 @@ const init = () => {
   if (savedCards) {
     cards = JSON.parse(savedCards);
   }
+  const savedDeckFlipped = window.localStorage.getItem("deckFlipped");
+  if (savedDeckFlipped) {
+    deckFlipped = JSON.parse(deckFlipped);
+  }
   changeCard(0);
+};
+
+const shuffleIndexes = () => {
+  let currentIndex = cards.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [indexes[currentIndex], indexes[randomIndex]] = [
+      indexes[randomIndex],
+      indexes[currentIndex],
+    ];
+  }
+  toggleSettings();
+};
+
+const restoreOriginalOrder = () => {
+  indexes = Array.from(Array(cards.length).keys());
+  window.localStorage.setItem("deckFlipped", JSON.stringify(indexes));
+};
+
+const flipDeck = () => {
+  deckFlipped = !deckFlipped;
+  window.localStorage.setItem("deckFlipped", JSON.stringify(deckFlipped));
+  flip();
+  toggleSettings();
 };
